@@ -13,7 +13,7 @@
 <jsp:include page="/include/header.jsp" />
 <p><br/></p>
 <div class="container">
-	
+	<h2>홍길동</h2>
 </div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp" />
