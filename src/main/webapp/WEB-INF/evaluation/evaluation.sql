@@ -21,4 +21,11 @@ desc evaluation;
 
 select * from evaluation;
 
+and concat(lectureName, professorName, evaluationTitle, evaluationContent) like
+					      "?
+
+select * from evaluation where lectureDivide like '%%' and concat(lectureName, professorName, evaluationTitle, evaluationContent) like '%%' order by evaluationID desc limit 3, 3;
+
+
+
 -- drop table evaluation;

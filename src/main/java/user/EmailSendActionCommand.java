@@ -62,7 +62,7 @@ public class EmailSendActionCommand implements UserInterface {
         // 세션에 난수 저장
         session.setAttribute("sRandomNumber", randomNumber);
         
-        String content = "다음 코드를 복사하여 웹페이지에서 인증을 진행하세요." + randomNumber;
+        String content = "다음 코드를 복사하여 웹페이지에서 인증을 진행하세요 ==> " + randomNumber;
         
         Properties p = new Properties();
         p.put("mail.smtp.user", from);

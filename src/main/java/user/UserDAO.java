@@ -139,5 +139,31 @@ public class UserDAO {
 	    }
 	    return false;
 	}
+	
+	// 회원 정보 가져오기(세션 처리용)
+	public UserVO getUserInfo(String userID) {
+		vo = new UserVO();
+		try {
+			sql = "select * from user where userID = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userID);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				vo.setUserID(rs.getString("userID"));
+				vo.setUserPassword(rs.getString("userPassword"));
+				vo.setUserEmail(rs.getString("userEmail"));
+				vo.setUserEmailHash(rs.getString("userEmailHash"));
+				vo.setUserEmailChecked(rs.getBoolean("userEmailChecked"));
+				vo.setAddress(rs.getString("address"));
+				vo.setLevel(rs.getInt("level"));
+			}
+		} catch (SQLException e) {
+			System.out.println("sql오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vo;
+	}
 
 }

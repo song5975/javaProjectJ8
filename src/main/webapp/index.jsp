@@ -1,10 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}" />
+
 <%
-  String userID = session.getAttribute("sUserID")==null ? "N" : (String) session.getAttribute("sUserID");
-  pageContext.setAttribute("userID", userID);
+	// 로그인하지 않으면 전체 내용을 볼 수 없음(pUserID 가 empty) - 구현
+	String userID = session.getAttribute("sUserID")==null ? "" : (String) session.getAttribute("sUserID");
+	pageContext.setAttribute("pUserID", userID);  
+	// 이메일 인증을 하지 않으면 등록, 신고를 할 수 없음(보는 것만 가능) - 구현
+	boolean userEmailChecked = session.getAttribute("sUserEmailChecked") == null ? false : (boolean) session.getAttribute("sUserEmailChecked");
+	pageContext.setAttribute("pUserEmailChecked", userEmailChecked);
+	// 관리자만 관리자 페이지를 사용할 수 있음 - 미구현
+	int level = session.getAttribute("sLevel") == null ? 0 : (int) session.getAttribute("sLevel");
+	pageContext.setAttribute("pLevel", level);
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,116 +53,78 @@
             }
         }
     </script>
+<!-- EvaluationValidation.js 파일을 연결합니다. -->
+<script src="${ctp}/js/EvaluationValidation.js"></script>
+<!-- ReportValidation.js 파일을 연결합니다. -->
+<script src="${ctp}/js/ReportValidation.js"></script>
 </head>
 <body>
 <jsp:include page="/include/header.jsp" />
 
-<c:if test="${ userID != 'N'}">
-
+<c:if test="${not empty pUserID}">
+<!-- 로그인하지 않으면 전체 내용을 볼 수 없음(pUserID 가 empty) -->
 <section class="container">
-	<form method="get" action="./index.jsp" class="form-inline mt-3">
-		<select name="lectureDivide" class="form-control mx-1 mt-2">
-			<option value="전체">전체</option>
-			<option value="전공">전공</option>
-			<option value="교양">교양</option>
-			<option value="기타">기타</option>
-		</select>
-		<input type="text" name="search" class="form-control mx-1 mt-2" placeholder="내용을 입력하세요.">
-		<button type="submit" class="btn btn-primary mx-1 mt-2">검색하기</button>
-		
-		
-		<a class="btn btn-primary mx-1 mt-2" data-toggle="modal" href="#registerModal">등록하기</a>
-		<a class="btn btn-danger mx-1 mt-2" data-toggle="modal" href="#reportModal">신고하기</a>
-		
-		
-	</form>
+    <form name="myformSearch" method="get" action="${ctp}/evaluationSearchAction.ev" class="form-inline mt-3">
+        <select name="lectureDivide" class="form-control mx-1 mt-2">
+            <option value="전체">전체</option>
+            <option value="전공">전공</option>
+            <option value="교양">교양</option>
+            <option value="기타">기타</option>
+        </select>
+        <select name="searchType" class="form-control mx-1 mt-2">
+            <option value="최신순">최신순</option>
+            <option value="추천순">추천순</option>
+        </select>
+        <input type="text" name="search" class="form-control mx-1 mt-2" placeholder="내용을 입력하세요.">
+        <button type="submit" class="btn btn-primary mx-1 mt-2">검색하기</button>
+
+        <c:if test="${pUserEmailChecked == true}">
+            <a class="btn btn-primary mx-1 mt-2" data-toggle="modal" href="#registerModal">등록하기</a>
+            <a class="btn btn-danger mx-1 mt-2" data-toggle="modal" href="#reportModal">신고하기</a>
+        </c:if>
+    </form>
+
+
+
+<!-- =============================================================================================================== -->
 	
-	<div class="card bg-light mt-3">
-		<div class="card-header bg-light">
-			<div class="row">
-				<div class="col-8 text-left">컴퓨터개론&nbsp;<small>송경근</small></div>
-				<div class="col-4 text-right">
-					종합&nbsp;<span style="color: red;">A</span>
-				</div>
-			</div>
-		</div>
-		<div class="card-body">
-		    <h5 class="card-title">
-		        정말 좋은 강의입니다.&nbsp;<small>(2023년 여름학기)</small>
-		    </h5>
-		    <p class="card-text">아주 좋은 강의 입니다. 학점도 아주 잘 받았습니다.</p>
-		    <div class="row">
-		        <div class="col-9 text-left">
-		            성적<span style="color: red;">A</span>
-		            널널<span style="color: red;">A</span>
-		            강의<span style="color: red;">B</span>
-		            <span style="color: green;">(추천: 15)</span>
-		        </div>
-		        <div class="col-3 text-right">
-		            <a href="#" onclick="confirmAndLike()" class="btn btn-success btn-sm">추천</a>
-		            <a href="#" onclick="confirmAndDelete()" class="btn btn-danger btn-sm">삭제</a>
-		        </div>
-		    </div>
-		</div>
-	</div>
-	
-	<div class="card bg-light mt-3">
-		<div class="card-header bg-light">
-			<div class="row">
-				<div class="col-8 text-left">컴퓨터개론&nbsp;<small>송경근</small></div>
-				<div class="col-4 text-right">
-					종합&nbsp;<span style="color: red;">A</span>
-				</div>
-			</div>
-		</div>
-		<div class="card-body">
-		    <h5 class="card-title">
-		        정말 좋은 강의입니다.&nbsp;<small>(2023년 여름학기)</small>
-		    </h5>
-		    <p class="card-text">아주 좋은 강의 입니다. 학점도 아주 잘 받았습니다.</p>
-		    <div class="row">
-		        <div class="col-9 text-left">
-		            성적<span style="color: red;">A</span>
-		            널널<span style="color: red;">A</span>
-		            강의<span style="color: red;">B</span>
-		            <span style="color: green;">(추천: 15)</span>
-		        </div>
-		        <div class="col-3 text-right">
-		            <a href="#" onclick="confirmAndLike()" class="btn btn-success btn-sm">추천</a>
-		            <a href="#" onclick="confirmAndDelete()" class="btn btn-danger btn-sm">삭제</a>
-		        </div>
-		    </div>
-		</div>
-	</div>
-	
-	<div class="card bg-light mt-3">
-		<div class="card-header bg-light">
-			<div class="row">
-				<div class="col-8 text-left">컴퓨터개론&nbsp;<small>송경근</small></div>
-				<div class="col-4 text-right">
-					종합&nbsp;<span style="color: red;">A</span>
-				</div>
-			</div>
-		</div>
-		<div class="card-body">
-		    <h5 class="card-title">
-		        정말 좋은 강의입니다.&nbsp;<small>(2023년 여름학기)</small>
-		    </h5>
-		    <p class="card-text">아주 좋은 강의 입니다. 학점도 아주 잘 받았습니다.</p>
-		    <div class="row">
-		        <div class="col-9 text-left">
-		            성적<span style="color: red;">A</span>
-		            널널<span style="color: red;">A</span>
-		            강의<span style="color: red;">B</span>
-		            <span style="color: green;">(추천: 15)</span>
-		        </div>
-		        <div class="col-3 text-right">
-		            <a href="#" onclick="confirmAndLike()" class="btn btn-success btn-sm">추천</a>
-		            <a href="#" onclick="confirmAndDelete()" class="btn btn-danger btn-sm">삭제</a>
-		        </div>
-		    </div>
-		</div>
-	</div>
+	<c:forEach var="vo" items="${evaluationList}" varStatus="st">
+    <div class="card bg-light mt-3">
+        <div class="card-header bg-light">
+            <div class="row">
+                <div class="col-8 text-left">${vo.lectureName}&nbsp;<small>${vo.professorName}</small></div>
+                <div class="col-4 text-right">
+                    종합&nbsp;<span style="color: red;">${vo.totalScore}</span>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                ${vo.evaluationTitle}&nbsp;<small>(${vo.lectureYear}년 ${vo.semesterDivide}학기)</small>
+            </h5>
+            <p class="card-text">${vo.evaluationContent}</p>
+            <div class="row">
+                <div class="col-9 text-left">
+                    성적<span style="color: red;">${vo.creditScore}</span>
+                    널널<span style="color: red;">${vo.comfortableScore}</span>
+                    강의<span style="color: red;">${vo.lectureScore}</span>
+                    <span style="color: green;">(추천: ${vo.likeCount})</span>
+                </div>
+                <div class="col-3 text-right">
+                    <a href="#" onclick="confirmAndLike()" class="btn btn-success btn-sm">추천</a>
+                    <a href="#" onclick="confirmAndDelete()" class="btn btn-danger btn-sm">삭제</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </c:forEach>
+    
+    <!-- 페이지 번호 출력 및 다음 페이지로 이동하는 링크 -->
+    
+    <%-- <c:if test="${not empty nextPageNumber}"> --%>
+        <a href="${ctp}/evaluationSearchAction.ev?pageNumber=${nextPageNumber}">다음 페이지</a>
+    <%-- </c:if> --%>
+    
 </section>
 
 <!-- =============================================================================================================== -->
@@ -168,7 +139,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form action="./evaluationRegisterAction.jsp" method="post">
+				<form name="myform" method="post" action="${ctp}/evaluationRegisterAction.ev">
 					<div class="form-row">
 						<div class="form-group col-sm-6">
 							<label>강의명</label>	
@@ -176,7 +147,7 @@
 						</div>
 						<div class="form-group col-sm-6">
 							<label>교수명</label>
-							<input type="text" name="lectureName" class="form-control" maxlength="20">
+							<input type="text" name="professorName" class="form-control" maxlength="20">
 						</div>
 					</div>
 					<div class="form-row">
@@ -218,7 +189,7 @@
 					</div>
 					<div class="form-group">
 						<label>제목</label>
-						<input type="text" name="evaluationTime" class="form-control" maxlength="30">
+						<input type="text" name="evaluationTitle" class="form-control" maxlength="30">
 					</div>
 					<div class="form-group">
 						<label>내용</label>
@@ -227,7 +198,7 @@
 					<div class="form-row">
 						<div class="form-group col-sm-3">
 							<label>종합</label>
-							<select name="tatalScore" class="form-control">
+							<select name="totalScore" class="form-control">
 								<option value="A" selected>A</option>
 								<option value="B">B</option>
 								<option value="C">C</option>
@@ -288,7 +259,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form action="./reportAction.jsp" method="post">
+				<form name="myformReport" method="post" action="${ctp}/evaluationReportAction.ev" >
 					<div class="form-group">
 						<label>신고 제목</label>
 						<input type="text" name="reportTitle" class="form-control" maxlength="30">

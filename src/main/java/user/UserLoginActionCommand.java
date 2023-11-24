@@ -22,8 +22,18 @@ public class UserLoginActionCommand implements UserInterface {
 		int res = dao.login(mid, pwd);
 		
 		if (res == 1) {
+			UserVO vo = new UserVO();
+			vo = dao.getUserInfo(mid);
+			
 			HttpSession session = request.getSession();
 			session.setAttribute("sUserID", mid);
+			session.setAttribute("sUserPassword", pwd);
+			session.setAttribute("sUserEmail", vo.getUserEmail());
+			session.setAttribute("sUserEmailHash", vo.getUserEmailHash());
+			session.setAttribute("sUserEmailChecked", vo.isUserEmailChecked());
+			session.setAttribute("sAddress", vo.getAddress());
+			session.setAttribute("sLevel", vo.getLevel());
+			
 			request.setAttribute("msg", "로그인 성공");
 		    request.setAttribute("url", "index.jsp");
 		}

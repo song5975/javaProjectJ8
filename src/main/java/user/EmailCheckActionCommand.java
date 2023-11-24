@@ -30,7 +30,11 @@ public class EmailCheckActionCommand implements UserInterface {
         	boolean res = dao.setUserEmailChecked(userID);
         	if(res) {
         		request.setAttribute("msg", "이메일 인증에 성공하였습니다.");
+        		/*
         		request.setAttribute("url", "index.jsp");
+        		*/
+        		// 메모 14번 참고, 인증 성공 시 메인으로 보내지 않고 로그인으로 보내서 한 페이지에서 세션을 처리하자.
+        		request.setAttribute("url", "userLogin.us");
         	}
         	else {
                 request.setAttribute("msg", "이메일 인증에 실패하였습니다. 다시 로그인 해주세요.");
