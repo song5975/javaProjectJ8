@@ -27,17 +27,15 @@
     <script>
         'use strict';
         
-        function confirmAndLike() {
+        function confirmAndLike(evaluationID) {
             if (confirm('추천하시겠습니까?')) {
-                // 여기에 추천 처리를 위한 코드 추가
-                alert('추천되었습니다.'); // 예시 코드, 실제 처리 코드로 변경해야 함
+            	window.location.href = "${ctp}/likeAction.li?evaluationID=" + evaluationID;
             }
         }
 
-        function confirmAndDelete() {
+        function confirmAndDelete(evaluationID) {
             if (confirm('삭제하시겠습니까?')) {
-                // 여기에 삭제 처리를 위한 코드 추가
-                alert('삭제되었습니다.'); // 예시 코드, 실제 처리 코드로 변경해야 함
+            	window.location.href = "${ctp}/deleteAction.li?evaluationID=" + evaluationID;
             }
         }
         
@@ -111,8 +109,8 @@
                     <span style="color: green;">(추천: ${vo.likeCount})</span>
                 </div>
                 <div class="col-3 text-right">
-                    <a href="#" onclick="confirmAndLike()" class="btn btn-success btn-sm">추천</a>
-                    <a href="#" onclick="confirmAndDelete()" class="btn btn-danger btn-sm">삭제</a>
+					<a href="#" onclick="confirmAndLike(${vo.evaluationID})" class="btn btn-success btn-sm">추천</a>
+					<a href="#" onclick="confirmAndDelete(${vo.evaluationID})" class="btn btn-danger btn-sm">삭제</a>
                 </div>
             </div>
         </div>

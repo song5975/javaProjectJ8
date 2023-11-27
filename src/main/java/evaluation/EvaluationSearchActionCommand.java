@@ -14,31 +14,32 @@ public class EvaluationSearchActionCommand implements EvaluationInterface {
         String lectureDivide = request.getParameter("lectureDivide") == null ? "" : request.getParameter("lectureDivide");
         String searchType = request.getParameter("searchType") == null ? "" : request.getParameter("searchType");
         String search = request.getParameter("search") == null ? "" : request.getParameter("search");
-        int pageNumber = request.getParameter("pageNumber") == null ? 0 : Integer.parseInt(request.getParameter("pageNumber"));
 
-//        int pageNumber = 0; // 기본값으로 초기화
-//        
-//        if (request.getParameter("pageNumber") != null) {
-//            try {
-//                pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
-//            } catch (Exception e) {
-//                System.out.println("pageNumber_type_Error");
-//            }
-//        }
+        // pageNumber의 기본값을 0으로 초기화
+        int pageNumber = 0;
+
+        // request.getParameter("pageNumber")이 null 또는 빈 문자열이 아닌 경우에만 parseInt 수행
+        String pageNumberString = request.getParameter("pageNumber");
+        if (pageNumberString != null && !pageNumberString.isEmpty()) {
+            try {
+                pageNumber = Integer.parseInt(pageNumberString);
+            } catch (NumberFormatException e) {
+                System.out.println("pageNumber_type_Error: " + e.getMessage());
+            }
+        }
 
         EvaluationDAO dao = new EvaluationDAO();
         ArrayList<EvaluationVO> evaluationList = dao.getList(lectureDivide, searchType, search, pageNumber);
-        for(EvaluationVO vo :evaluationList) {
-        	System.out.println(vo.toString());
-        }
+
         // 평가 목록을 request에 저장
         request.setAttribute("evaluationList", evaluationList);
 
         // 다음에 표시할 페이지 번호를 계산하여 request에 저장
         int nextPageNumber = pageNumber + 1;
         request.setAttribute("nextPageNumber", nextPageNumber);
-        
-//		request.setAttribute("msg", "검색 완료");
-//	    request.setAttribute("url", "index.jsp");
+
+        // 나머지 코드는 그대로 유지
+        // request.setAttribute("msg", "검색 완료");
+        // request.setAttribute("url", "index.jsp");
     }
 }
