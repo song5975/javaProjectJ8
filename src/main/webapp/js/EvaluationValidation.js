@@ -1,9 +1,9 @@
 // EvaluationValidation.js
 
 document.addEventListener('DOMContentLoaded', function () {
-  const form = document.forms['myform']; // 여기서 'myform'은 폼의 이름입니다.
+  const form = document.forms['myformEvaluation']; // 여기서 'myformEvaluation'은 폼의 이름입니다.
 
-  form.addEventListener('submit', function (event) {
+  	form.addEventListener('submit', function (event) {
     event.preventDefault(); // 기본 제출 동작을 막습니다.
 
     // 필수 입력 필드들을 확인합니다.
@@ -19,4 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
       form.submit(); // 필수 항목이 모두 입력되었으면 폼을 제출합니다.
     }
   });
+
 });
+

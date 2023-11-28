@@ -27,6 +27,10 @@
     <script>
         'use strict';
         
+        $(document).ready(function() {
+            $('#myformSearch').submit();
+        });
+        
         function confirmAndLike(evaluationID) {
             if (confirm('추천하시겠습니까?')) {
             	window.location.href = "${ctp}/likeAction.li?evaluationID=" + evaluationID;
@@ -82,8 +86,6 @@
         </c:if>
     </form>
 
-
-
 <!-- =============================================================================================================== -->
 	
 	<c:forEach var="vo" items="${evaluationList}" varStatus="st">
@@ -98,7 +100,7 @@
         </div>
         <div class="card-body">
             <h5 class="card-title">
-                ${vo.evaluationTitle}&nbsp;<small>(${vo.lectureYear}년 ${vo.semesterDivide}학기)</small>
+                ${vo.evaluationTitle}&nbsp;<small>(${vo.lectureYear}년 ${vo.semesterDivide})</small>
             </h5>
             <p class="card-text">${vo.evaluationContent}</p>
             <div class="row">
@@ -117,12 +119,23 @@
     </div>
     </c:forEach>
     
+    <div class="mt-3">
     <!-- 페이지 번호 출력 및 다음 페이지로 이동하는 링크 -->
-    
-    <%-- <c:if test="${not empty nextPageNumber}"> --%>
-        <a href="${ctp}/evaluationSearchAction.ev?pageNumber=${nextPageNumber}">다음 페이지</a>
-    <%-- </c:if> --%>
-    
+	<c:if test="${not empty nextPageNumber}">
+	    <c:set var="prevPageNumber" value="${nextPageNumber - 2}" />
+	    <c:choose>
+	        <c:when test="${prevPageNumber >= 0}">
+	            <a href="${ctp}/evaluationSearchAction.ev?pageNumber=${prevPageNumber}&lectureDivide=${param.lectureDivide}&searchType=${param.searchType}&search=${param.search}" class="btn btn-primary btn-sm">이전 페이지</a>
+	        </c:when>
+	        <c:otherwise>
+	            <a href="#" style="display: none;" class="btn btn-primary btn-sm">이전 페이지</a>
+	        </c:otherwise>
+	    </c:choose>
+	    <c:if test="${not empty evaluationList}">
+	    <a href="${ctp}/evaluationSearchAction.ev?pageNumber=${nextPageNumber}&lectureDivide=${param.lectureDivide}&searchType=${param.searchType}&search=${param.search}" class="btn btn-primary btn-sm">다음 페이지</a>
+	    </c:if>
+	</c:if>
+	</div>
 </section>
 
 <!-- =============================================================================================================== -->
@@ -137,7 +150,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form name="myform" method="post" action="${ctp}/evaluationRegisterAction.ev">
+				<form name="myformEvaluation" method="post" action="${ctp}/evaluationRegisterAction.ev">
 					<div class="form-row">
 						<div class="form-group col-sm-6">
 							<label>강의명</label>	

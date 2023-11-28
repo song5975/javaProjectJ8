@@ -17,7 +17,7 @@ public class EvaluationSearchActionCommand implements EvaluationInterface {
 
         // pageNumber의 기본값을 0으로 초기화
         int pageNumber = 0;
-
+        
         // request.getParameter("pageNumber")이 null 또는 빈 문자열이 아닌 경우에만 parseInt 수행
         String pageNumberString = request.getParameter("pageNumber");
         if (pageNumberString != null && !pageNumberString.isEmpty()) {
@@ -28,18 +28,23 @@ public class EvaluationSearchActionCommand implements EvaluationInterface {
             }
         }
 
+        System.out.println("EvaluationSearchActionCommand_lectureDivide = " + lectureDivide);
+        System.out.println("EvaluationSearchActionCommand_searchType = " + searchType);
+        System.out.println("EvaluationSearchActionCommand_search = " + search);
+        System.out.println("EvaluationSearchActionCommand_pageNumber = " + pageNumber);
+        
         EvaluationDAO dao = new EvaluationDAO();
         ArrayList<EvaluationVO> evaluationList = dao.getList(lectureDivide, searchType, search, pageNumber);
 
         // 평가 목록을 request에 저장
         request.setAttribute("evaluationList", evaluationList);
+        
+        System.out.println(evaluationList.toString());
 
         // 다음에 표시할 페이지 번호를 계산하여 request에 저장
         int nextPageNumber = pageNumber + 1;
         request.setAttribute("nextPageNumber", nextPageNumber);
-
-        // 나머지 코드는 그대로 유지
-        // request.setAttribute("msg", "검색 완료");
-        // request.setAttribute("url", "index.jsp");
+        System.out.println("EvaluationSearchActionCommand_pageNumber = " + nextPageNumber);
+      
     }
 }

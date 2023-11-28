@@ -66,6 +66,7 @@ public class EvaluationDAO {
     }
 
     // index.jsp에서 검색하기 버튼을 눌러서 게시글의 전체(개별) 리스트 가져오기
+    /*
     public ArrayList<EvaluationVO> getList(String lectureDivide, String searchType, String search, int pageNumber) {
         if (lectureDivide.equals("전체")) {
             lectureDivide = "";
@@ -118,6 +119,125 @@ public class EvaluationDAO {
         }
         return evaluationList;
     }
+    */
+    
+    // index.jsp에서 검색하기 버튼을 눌러서 게시글의 전체(개별) 리스트 가져오기
+    /*
+    public ArrayList<EvaluationVO> getList(String lectureDivide, String searchType, String search, int pageNumber) {
+        if (lectureDivide.equals("전체")) {
+            lectureDivide = "";
+        }
+        ArrayList<EvaluationVO> evaluationList = null; // 강의 평가 글이 담기는 List
+        try {
+            String lectureNameSearch = "%" + search + "%";
+            String professorNameSearch = "%" + search + "%";
+            String evaluationTitleSearch = "%" + search + "%";
+            String evaluationContentSearch = "%" + search + "%";
+
+            if (searchType.equals("최신순")) {
+                sql = "SELECT * FROM evaluation WHERE lectureDivide LIKE ? AND lectureName LIKE ? OR professorName LIKE ? OR evaluationTitle LIKE ? OR evaluationContent LIKE ? ORDER BY evaluationID DESC LIMIT ?, ?";
+            } else if (searchType.equals("추천순")) {
+                sql = "SELECT * FROM evaluation WHERE lectureDivide LIKE ? AND lectureName LIKE ? OR professorName LIKE ? OR evaluationTitle LIKE ? OR evaluationContent LIKE ? ORDER BY likeCount DESC LIMIT ?, ?";
+            }
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, "%" + lectureDivide + "%");
+            pstmt.setString(2, lectureNameSearch);
+            pstmt.setString(3, professorNameSearch);
+            pstmt.setString(4, evaluationTitleSearch);
+            pstmt.setString(5, evaluationContentSearch);
+            pstmt.setInt(6, pageNumber * 3); // 시작 레코드 인덱스
+            pstmt.setInt(7, 3); // 가져올 레코드 수
+
+            rs = pstmt.executeQuery();
+
+            evaluationList = new ArrayList<>();
+            while (rs.next()) {
+                // EvaluationVO 객체 생성 및 설정
+                EvaluationVO vo = new EvaluationVO();
+                vo.setEvaluationID(rs.getInt("evaluationID"));
+                vo.setUserID(rs.getString("userID"));
+                vo.setLectureName(rs.getString("lectureName"));
+                vo.setProfessorName(rs.getString("professorName"));
+                vo.setLectureYear(rs.getInt("lectureYear"));
+                vo.setSemesterDivide(rs.getString("semesterDivide"));
+                vo.setLectureDivide(rs.getString("lectureDivide"));
+                vo.setEvaluationTitle(rs.getString("evaluationTitle"));
+                vo.setEvaluationContent(rs.getString("evaluationContent"));
+                vo.setTotalScore(rs.getString("totalScore"));
+                vo.setCreditScore(rs.getString("creditScore"));
+                vo.setComfortableScore(rs.getString("comfortableScore"));
+                vo.setLectureScore(rs.getString("lectureScore"));
+                vo.setLikeCount(rs.getInt("likeCount"));
+
+                // List에 추가
+                evaluationList.add(vo);
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL 오류 : " + e.getMessage());
+        } finally {
+            rsClose();
+        }
+        return evaluationList;
+    }
+    */
+    
+    // index.jsp에서 검색하기 버튼을 눌러서 게시글의 전체(개별) 리스트 가져오기
+    public ArrayList<EvaluationVO> getList(String lectureDivide, String searchType, String search, int pageNumber) {
+        if (lectureDivide.equals("전체")) {
+            lectureDivide = "";
+        }
+        ArrayList<EvaluationVO> evaluationList = null; // 강의 평가 글이 담기는 List
+        try {
+            if (searchType.equals("최신순")) {
+                sql = "SELECT * FROM evaluation WHERE lectureDivide LIKE ? AND CONCAT(lectureName, professorName, evaluationTitle, evaluationContent) LIKE ? ORDER BY evaluationID DESC LIMIT ?, ?";
+            } else if (searchType.equals("추천순")) {
+                sql = "SELECT * FROM evaluation WHERE lectureDivide LIKE ? AND CONCAT(lectureName, professorName, evaluationTitle, evaluationContent) LIKE ? ORDER BY likeCount DESC LIMIT ?, ?";
+            }
+            
+            System.out.println("EvaluationDAO_sql = " + sql);
+            
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, "%" + lectureDivide + "%");
+            pstmt.setString(2, "%" + search + "%");
+            pstmt.setInt(3, pageNumber * 3); 	// 시작 레코드 인덱스
+            pstmt.setInt(4, 3); 				// 가져올 레코드 수
+            System.out.println("EvaluationDAO_2");
+            rs = pstmt.executeQuery();
+            System.out.println("EvaluationDAO_3");
+            evaluationList = new ArrayList<>();
+            while (rs.next()) {
+                System.out.println("EvaluationDAO_4");
+                // EvaluationVO 객체 생성 및 설정
+                EvaluationVO vo = new EvaluationVO();
+                vo.setEvaluationID(rs.getInt("evaluationID"));
+                vo.setUserID(rs.getString("userID"));
+                vo.setLectureName(rs.getString("lectureName"));
+                vo.setProfessorName(rs.getString("professorName"));
+                vo.setLectureYear(rs.getInt("lectureYear"));
+                vo.setSemesterDivide(rs.getString("semesterDivide"));
+                vo.setLectureDivide(rs.getString("lectureDivide"));
+                vo.setEvaluationTitle(rs.getString("evaluationTitle"));
+                vo.setEvaluationContent(rs.getString("evaluationContent"));
+                vo.setTotalScore(rs.getString("totalScore"));
+                vo.setCreditScore(rs.getString("creditScore"));
+                vo.setComfortableScore(rs.getString("comfortableScore"));
+                vo.setLectureScore(rs.getString("lectureScore"));
+                vo.setLikeCount(rs.getInt("likeCount"));
+
+                evaluationList.add(vo);
+            }
+            System.out.println("EvaluationDAO_5");
+        } catch (SQLException e) {
+            System.out.println("SQL 오류 : " + e.getMessage());
+        } finally {
+            rsClose();
+        }
+        System.out.println("EvaluationDAO_6");
+        return evaluationList;
+    }
+
+
     
     // evaluationID로 userID 가져오기
     public String getUserID(String evaluationID) {

@@ -26,9 +26,19 @@ public class EvaluationController extends HttpServlet{
 		System.out.println(com);
 		
 		// index.jsp로 이동
+		/*
 		if(com.equals("/index")) {
 			viewPage = "/include/message.jsp";
 		}
+		*/
+		
+        // index.jsp로 이동
+        if (com.equals("/index")) {
+            // 최초 페이지 로딩 시 데이터를 가져오도록 수정
+            command = new EvaluationSearchActionCommand();
+            command.execute(request, response);
+            viewPage = "/index.jsp";
+        }
 
 		// 사용자가 강의 평가를 작성하고 등록하기 버튼을 눌렀을 때
 		if(com.equals("/evaluationRegisterAction")) {
