@@ -31,6 +31,12 @@
             $('#myformSearch').submit();
         });
         
+ 		/*   
+        $(function () {
+            $('#myformSearch').submit();
+        });
+        */
+        
         function confirmAndLike(evaluationID) {
             if (confirm('추천하시겠습니까?')) {
             	window.location.href = "${ctp}/likeAction.li?evaluationID=" + evaluationID;

@@ -18,6 +18,10 @@ public class UserLoginActionCommand implements UserInterface {
 		String mid = request.getParameter("userID")==null ? "" : request.getParameter("userID");
 		String pwd = request.getParameter("userPassword")==null ? "" : request.getParameter("userPassword");
 		
+		// 입력 받은 비밀번호 암호화처리(SHA256) 후 DB와 비교
+		SHA256 security = new SHA256();
+		pwd = security.getSHA256(pwd);
+
 		UserDAO dao = new UserDAO();
 		int res = dao.login(mid, pwd);
 		

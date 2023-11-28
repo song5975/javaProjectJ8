@@ -40,6 +40,13 @@ public class UserController extends HttpServlet {
 			viewPage += "/userLogin.jsp";
 		}
 
+		// userJoin에서 입력 받은 값을 확인하여 가입 성공 혹은 실패
+		else if(com.equals("/userRegisterAction")) {
+			command = new UserRegisterActionCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+
 		// 사용자 로그인 페이지에서 값을 입력한 뒤 DB의 정보 확인
 		if(com.equals("/userLoginAction")) {
 			command = new UserLoginActionCommand();
@@ -59,12 +66,6 @@ public class UserController extends HttpServlet {
 			viewPage += "/userJoin.jsp";
 		}
 		
-		// userJoin에서 입력 받은 값을 확인하여 가입 성공 혹은 실패
-		else if(com.equals("/userRegisterAction")) {
-			command = new UserRegisterActionCommand();
-			command.execute(request, response);
-			viewPage = "/include/message.jsp";
-		}
 		
 		// UserRegisterActionCommand에서 회원 가입 후 이메일 인증
 		else if(com.equals("/emailSendAction")) {

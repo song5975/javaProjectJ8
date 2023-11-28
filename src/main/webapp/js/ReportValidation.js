@@ -3,8 +3,13 @@
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.forms['myformReport']; // 여기서 'myformReport'은 폼의 이름입니다.
 
-  form.addEventListener('submit', function (event) {
+  	form.addEventListener('submit', function (event) {
     event.preventDefault(); // 기본 제출 동작을 막습니다.
+    
+    if (!form) {
+        console.error('폼을 찾을 수 없습니다.');
+        return;
+    }
 
     // 필수 입력 필드들을 확인합니다.
     const reportTitle = form['reportTitle'].value;
