@@ -1,3 +1,5 @@
+// registrationValidation.js
+
 function fCheck() {
     let regUserID = /^[a-zA-Z0-9_]{4,30}$/;
     let regUserPassword = /(?=.*[0-9a-zA-Z]).{4,100}$/;

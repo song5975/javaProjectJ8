@@ -25,7 +25,7 @@ public class EmailSendActionCommand implements UserInterface {
         UserDAO dao = new UserDAO();
         String userID = null;
 
-        // 세션에서 사용자 정보 가져오기
+        // 세션에서 사용자ID 가져오기
         HttpSession session = request.getSession();
         if (session.getAttribute("sUserID") != null) {
             userID = (String) session.getAttribute("sUserID");
@@ -93,9 +93,11 @@ public class EmailSendActionCommand implements UserInterface {
         	Authenticator 클래스의 getPasswordAuthentication 메서드에서 반환되는 
         	PasswordAuthentication 객체에는 사용자의 이메일 계정과 해당 이메일 계정에 대한 앱 비밀번호가 포함
         */
+        // Authenticator 는 추상 클래스
         try {
             Authenticator auth = new Authenticator() {
-            	// getPasswordAuthentication 메서드는 추상 메서드
+            	// getPasswordAuthentication 메서드는 Authenticator에 속한 추상 메서드
+            	@Override
                 protected PasswordAuthentication getPasswordAuthentication() {
                 	// 사용자가 이 메서드를 구현하여 사용자의 이메일 계정 정보(PasswordAuthentication 객체)를 반환
                     return new PasswordAuthentication(from, "daplpepeofkfamie"); // 생성한 앱 비밀번호

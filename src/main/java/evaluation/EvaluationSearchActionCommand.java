@@ -14,7 +14,7 @@ public class EvaluationSearchActionCommand implements EvaluationInterface {
         String lectureDivide = request.getParameter("lectureDivide") == null ? "" : request.getParameter("lectureDivide");
         String searchType = request.getParameter("searchType") == null ? "" : request.getParameter("searchType");
         String search = request.getParameter("search") == null ? "" : request.getParameter("search");
-
+        
         // pageNumber의 기본값을 0으로 초기화
         int pageNumber = 0;
         
@@ -27,11 +27,6 @@ public class EvaluationSearchActionCommand implements EvaluationInterface {
                 System.out.println("pageNumber_type_Error: " + e.getMessage());
             }
         }
-
-        System.out.println("EvaluationSearchActionCommand_lectureDivide = " + lectureDivide);
-        System.out.println("EvaluationSearchActionCommand_searchType = " + searchType);
-        System.out.println("EvaluationSearchActionCommand_search = " + search);
-        System.out.println("EvaluationSearchActionCommand_pageNumber = " + pageNumber);
         
         EvaluationDAO dao = new EvaluationDAO();
         ArrayList<EvaluationVO> evaluationList = dao.getList(lectureDivide, searchType, search, pageNumber);

@@ -26,14 +26,6 @@ public class LikeActionCommand implements LikeyInterface {
         String userIP = request.getRemoteAddr();
         System.out.println(userIP);
 
-        // 이미 좋아요를 눌렀는지 확인
-		/*
-        if (Ldao.isLiked(userID, evaluationID)) {
-            request.setAttribute("msg", "이미 추천을 누른 글입니다.");
-            request.setAttribute("url", "index.jsp");
-        }
-		*/
-		
 		// 이미 좋아요를 눌렀는지 확인
         LikeyDAO Ldao = new LikeyDAO();
         if (Ldao.isLiked(userID, evaluationID)) {

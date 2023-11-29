@@ -1,17 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-2">
-			<img src="#" class="img-fluid" alt="Study Image">
-        </div>
-
-        <div class="col-md-8">
-            <div class="jumbotron text-center" style="margin-bottom:0; height:150px">
-                <h1 style="margin:-16px">강의평가</h1>
-                <br/>
-                <p>(본 사이트는 반응형으로 제작되었습니다.)</p> 
-            </div>
-        </div>
+<!-- Page content -->
+<!-- Automatic Slideshow Images -->
+<div class="mySlides w3-display-container w3-center bg-success">
+    <!-- <img src="/w3images/la.jpg" style="width:100%"> -->
+    <div class="w3-container w3-text-black w3-padding-32 w3-hide-small">
+        <h1>👨🏻‍🎓 강의평가 사이트 👩🏻‍🎓</h1>
+        <p><b>(본 사이트는 반응형으로 제작되었습니다.)</b></p>
     </div>
 </div>
+<div class="mySlides w3-display-container w3-center bg-primary">
+    <!-- <img src="/w3images/ny.jpg" style="width:100%"> -->
+    <div class="w3-container w3-text-black w3-padding-32 w3-hide-small">
+        <h3>(☞ﾟヮﾟ)☞ 강의평가를 해주세요. ☜(ﾟヮﾟ☜)</h3>
+        <p><b>(본 사이트는 반응형으로 제작되었습니다.)</b></p>
+    </div>
+</div>
+<div class="mySlides w3-display-container w3-center bg-warning">
+    <!-- <img src="/w3images/chicago.jpg" style="width:100%"> -->
+    <div class="w3-container w3-text-black w3-padding-32 w3-hide-small">
+        <h3>강의평가</h3>
+        <p><b>(본 사이트는 반응형으로 제작되었습니다.)</b></p>
+    </div>
+</div>
+

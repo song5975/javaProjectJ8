@@ -44,18 +44,21 @@ public class EvaluationDAO {
         try {
             sql = "INSERT INTO evaluation VALUES (default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)";
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, vo.getUserID());
-            pstmt.setString(2, vo.getLectureName());
-            pstmt.setString(3, vo.getProfessorName());
-            pstmt.setInt(4, vo.getLectureYear());
-            pstmt.setString(5, vo.getSemesterDivide());
-            pstmt.setString(6, vo.getLectureDivide());
-            pstmt.setString(7, vo.getEvaluationTitle());
-            pstmt.setString(8, vo.getEvaluationContent());
-            pstmt.setString(9, vo.getTotalScore());
-            pstmt.setString(10, vo.getCreditScore());
-            pstmt.setString(11, vo.getComfortableScore());
-            pstmt.setString(12, vo.getLectureScore());
+
+            // 사용자 입력 값에 대한 XSS 방지 처리
+            setStringSafe(pstmt, 1, vo.getUserID());
+            setStringSafe(pstmt, 2, vo.getLectureName());
+            setStringSafe(pstmt, 3, vo.getProfessorName());
+            setInt(pstmt, 4, vo.getLectureYear());
+            setStringSafe(pstmt, 5, vo.getSemesterDivide());
+            setStringSafe(pstmt, 6, vo.getLectureDivide());
+            setStringSafe(pstmt, 7, vo.getEvaluationTitle());
+            setStringSafe(pstmt, 8, vo.getEvaluationContent());
+            setStringSafe(pstmt, 9, vo.getTotalScore());
+            setStringSafe(pstmt, 10, vo.getCreditScore());
+            setStringSafe(pstmt, 11, vo.getComfortableScore());
+            setStringSafe(pstmt, 12, vo.getLectureScore());
+
             return pstmt.executeUpdate(); // 등록 시 1 반환
         } catch (SQLException e) {
             System.out.println("SQL 오류 : " + e.getMessage());
@@ -64,6 +67,17 @@ public class EvaluationDAO {
         }
         return -1; // 데이터베이스 오류
     }
+
+    // XSS 방지 처리를 위한 함수
+    private void setStringSafe(PreparedStatement pstmt, int index, String value) throws SQLException {
+        pstmt.setString(index, value.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\r\n", "<br>"));
+    }
+
+    // 정수 값을 설정하는 함수
+    private void setInt(PreparedStatement pstmt, int index, int value) throws SQLException {
+        pstmt.setInt(index, value);
+    }
+
 
     // index.jsp에서 검색하기 버튼을 눌러서 게시글의 전체(개별) 리스트 가져오기
     /*

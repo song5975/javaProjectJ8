@@ -10,7 +10,7 @@
 	boolean userEmailChecked = session.getAttribute("sUserEmailChecked") == null ? false : (boolean) session.getAttribute("sUserEmailChecked");
 	pageContext.setAttribute("pUserEmailChecked", userEmailChecked);
 	// 관리자만 관리자 페이지를 사용할 수 있음 - 미구현
-	int level = session.getAttribute("sLevel") == null ? 0 : (int) session.getAttribute("sLevel");
+	int level = session.getAttribute("sLevel") == null ? 1 : (int) session.getAttribute("sLevel");
 	pageContext.setAttribute("pLevel", level);
 %>
 
@@ -19,6 +19,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- favicon 404 Error 방지 -->
+    <link rel="shortcut icon" href="data:image/x-icon" type="image/x-icon">
     <title>강의평가 웹 사이트</title>
     <!-- 부트스트랩 추가하기 -->
     <jsp:include page="/include/bs4.jsp" />
@@ -31,12 +33,12 @@
             $('#myformSearch').submit();
         });
         
- 		/*   
+/* 
         $(function () {
             $('#myformSearch').submit();
         });
-        */
-        
+
+ */        
         function confirmAndLike(evaluationID) {
             if (confirm('추천하시겠습니까?')) {
             	window.location.href = "${ctp}/likeAction.li?evaluationID=" + evaluationID;
@@ -68,7 +70,6 @@
 </head>
 <body>
 <jsp:include page="/include/header.jsp" />
-
 <c:if test="${not empty pUserID}">
 <!-- 로그인하지 않으면 전체 내용을 볼 수 없음(pUserID 가 empty) -->
 <section class="container">
@@ -125,7 +126,7 @@
     </div>
     </c:forEach>
     
-    <div class="mt-3">
+    <div class="mt-3 mb-3">
     <!-- 페이지 번호 출력 및 다음 페이지로 이동하는 링크 -->
 	<c:if test="${not empty nextPageNumber}">
 	    <c:set var="prevPageNumber" value="${nextPageNumber - 2}" />
@@ -298,5 +299,7 @@
 </c:if>
 
 <jsp:include page="/include/footer.jsp" />
+<!-- headerHome.js 파일을 연결합니다. -->
+<script src="${ctp}/js/headerHome.js"></script>
 </body>
 </html>

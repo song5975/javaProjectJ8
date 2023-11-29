@@ -32,5 +32,7 @@
 
 
 <jsp:include page="/include/footer.jsp" />
+<!-- headerHome.js 파일을 연결합니다. -->
+<script src="${ctp}/js/headerHome.js"></script>
 </body>
 </html>

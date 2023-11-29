@@ -14,12 +14,9 @@
     </button>
     <div id="navbar" class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              	<a class="nav-link" href="http://192.168.50.68:9090/javaProjectJ8">메인</a>
-            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="dropdown" data-toggle="dropdown">
-                    회원 관리
+                    메뉴
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdown">
                     <c:if test="${empty pUserID}"><a class="dropdown-item" href="userLogin.us">로그인</a></c:if>
@@ -27,12 +24,24 @@
                     <c:if test="${not empty pUserID}"><a class="dropdown-item" href="#" onclick="confirmLogout()">로그아웃</a></c:if>
                 </div>
             </li>
+            <c:if test="${sLevel == 0}">
+	            <li class="nav-item dropdown">
+	                <a class="nav-link dropdown-toggle" id="dropdown" data-toggle="dropdown">
+	                    관리자용
+	                </a>
+	                <div class="dropdown-menu" aria-labelledby="dropdown">
+	                    <a class="dropdown-item" href="#">회원 관리</a>
+	                    <a class="dropdown-item" href="#">강의 관리</a>
+	                    <a class="dropdown-item" href="#">기타</a>
+	                </div>
+	            </li>
+            </c:if>
         </ul>
-        <c:if test="${not empty pUserID}">
+<%--         <c:if test="${not empty pUserID}">
         <form action="./index.jsp" class="form-inline my-2 my-lg-0">
             <input type="text" name="search" class="form-control mr-sm-2" type="search" placeholder="내용을 입력하세요." aria-label="search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
         </form>
-        </c:if>
+        </c:if> --%>
     </div>
 </nav>
