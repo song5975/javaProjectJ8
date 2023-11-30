@@ -6,21 +6,21 @@
     <!-- <img src="/w3images/la.jpg" style="width:100%"> -->
     <div class="w3-container w3-text-black w3-padding-32 w3-hide-small">
         <h1>👨🏻‍🎓 강의평가 사이트 👩🏻‍🎓</h1>
-        <p><b>(본 사이트는 반응형으로 제작되었습니다.)</b></p>
+        <p><b>(☞ﾟヮﾟ)☞ 강의평가를 해주세요. ☜(ﾟヮﾟ☜)</b></p>
     </div>
 </div>
 <div class="mySlides w3-display-container w3-center bg-primary">
     <!-- <img src="/w3images/ny.jpg" style="width:100%"> -->
     <div class="w3-container w3-text-black w3-padding-32 w3-hide-small">
-        <h3>(☞ﾟヮﾟ)☞ 강의평가를 해주세요. ☜(ﾟヮﾟ☜)</h3>
-        <p><b>(본 사이트는 반응형으로 제작되었습니다.)</b></p>
+        <h3>👨🏻‍🎓 강의평가 사이트 👩🏻‍🎓</h3>
+        <p><b>(☞ﾟヮﾟ)☞ 강의평가를 해주세요. ☜(ﾟヮﾟ☜)</b></p>
     </div>
 </div>
 <div class="mySlides w3-display-container w3-center bg-warning">
     <!-- <img src="/w3images/chicago.jpg" style="width:100%"> -->
     <div class="w3-container w3-text-black w3-padding-32 w3-hide-small">
         <h3>👨🏻‍🎓 강의평가 사이트 👩🏻‍🎓</h3>
-        <p><b>(본 사이트는 반응형으로 제작되었습니다.)</b></p>
+        <p><b>(☞ﾟヮﾟ)☞ 강의평가를 해주세요. ☜(ﾟヮﾟ☜)</b></p>
     </div>
 </div>
 

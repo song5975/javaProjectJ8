@@ -122,7 +122,7 @@
         </div>
         <div class="card-body">
             <h5 class="card-title">
-                ${vo.evaluationTitle}&nbsp;<small>(${vo.lectureYear}년 ${vo.semesterDivide})</small>
+                ${vo.evaluationTitle}&nbsp;<small>(${vo.lectureYear}년 ${vo.semesterDivide}) / (작성자 : ${vo.userID})</small>
             </h5>
             <p class="card-text">${vo.evaluationContent}</p>
             <div class="row">
