@@ -28,29 +28,44 @@
     <link rel="stylesheet" href="./css/custom.css">
     <script>
         'use strict';
-        
+		/* 
         $(document).ready(function() {
             $('#myformSearch').submit();
         });
-        
-/* 
+		 */
+		 
+        /* 
         $(function () {
             $('#myformSearch').submit();
         });
+        */
 
- */        
+        $(document).ready(function() {
+            var submitted = false;
+
+            $('#myformSearch').submit(function() {
+                if (!submitted) {
+                    submitted = true;
+                    // 추가로 실행할 코드 작성
+                }
+            });
+
+            // 초기에 한 번은 실행
+            $('#myformSearch').submit();
+        });
+
         function confirmAndLike(evaluationID) {
             if (confirm('추천하시겠습니까?')) {
-            	window.location.href = "${ctp}/likeAction.li?evaluationID=" + evaluationID;
+                window.location.href = "${ctp}/likeAction.li?evaluationID=" + evaluationID;
             }
         }
 
         function confirmAndDelete(evaluationID) {
             if (confirm('삭제하시겠습니까?')) {
-            	window.location.href = "${ctp}/deleteAction.li?evaluationID=" + evaluationID;
+                window.location.href = "${ctp}/deleteAction.li?evaluationID=" + evaluationID;
             }
         }
-        
+
         // header 안의 nav 에서 로그아웃 버튼을 눌렀을 때
         function confirmLogout() {
             var response = confirm("로그아웃 하시겠습니까?");
@@ -132,14 +147,16 @@
 	    <c:set var="prevPageNumber" value="${nextPageNumber - 2}" />
 	    <c:choose>
 	        <c:when test="${prevPageNumber >= 0}">
-	            <a href="${ctp}/evaluationSearchAction.ev?pageNumber=${prevPageNumber}&lectureDivide=${param.lectureDivide}&searchType=${param.searchType}&search=${param.search}" class="btn btn-primary btn-sm">이전 페이지</a>
+	            <%-- <a href="${ctp}/evaluationSearchAction.ev?pageNumber=${prevPageNumber}&lectureDivide=${param.lectureDivide}&searchType=${param.searchType}&search=${param.search}" class="btn btn-primary btn-sm">이전 페이지</a> --%>
+	            <a href="${ctp}/evaluationSearchAction.ev?pageNumber=${prevPageNumber}&lectureDivide=${lectureDivide}&searchType=${searchType}&search=${search}" class="btn btn-primary btn-sm">이전 페이지</a>
 	        </c:when>
 	        <c:otherwise>
 	            <a href="#" style="display: none;" class="btn btn-primary btn-sm">이전 페이지</a>
 	        </c:otherwise>
 	    </c:choose>
 	    <c:if test="${not empty evaluationList}">
-	    <a href="${ctp}/evaluationSearchAction.ev?pageNumber=${nextPageNumber}&lectureDivide=${param.lectureDivide}&searchType=${param.searchType}&search=${param.search}" class="btn btn-primary btn-sm">다음 페이지</a>
+	    <%-- <a href="${ctp}/evaluationSearchAction.ev?pageNumber=${nextPageNumber}&lectureDivide=${param.lectureDivide}&searchType=${param.searchType}&search=${param.search}" class="btn btn-primary btn-sm">다음 페이지</a> --%>
+	    <a href="${ctp}/evaluationSearchAction.ev?pageNumber=${nextPageNumber}&lectureDivide=${lectureDivide}&searchType=${searchType}&search=${search}" class="btn btn-primary btn-sm">다음 페이지</a>
 	    </c:if>
 	</c:if>
 	</div>

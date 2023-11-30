@@ -166,4 +166,34 @@ public class UserDAO {
 		return vo;
 	}
 
+	public int getUserLevel(String userID) {
+	    try {
+	        sql = "SELECT level FROM user WHERE userID = ?";
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setString(1, userID);
+
+	        rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            return rs.getInt("level");
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("SQL 오류: " + e.getMessage());
+	    } finally {
+	        rsClose();
+	    }
+
+	    // 존재하지 않는 아이디나 다른 오류인 경우 -1 또는 특정 값을 반환
+	    return -1;
+	}
+
+	// userID로 level이 관리자인지 확인
+	public boolean isAdmin(String userID) {
+	    int userLevel = getUserLevel(userID);
+
+	    // level이 0이면 true 반환
+	    return userLevel == 0;
+	}
+
+
 }

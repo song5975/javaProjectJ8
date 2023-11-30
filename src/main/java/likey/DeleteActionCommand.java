@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import evaluation.EvaluationDAO;
+import user.UserDAO;
 
 public class DeleteActionCommand implements LikeyInterface {
 
@@ -19,7 +20,8 @@ public class DeleteActionCommand implements LikeyInterface {
 	    String userID = (String) session.getAttribute("sUserID");
 
 		EvaluationDAO dao = new EvaluationDAO();
-		if(userID.equals(dao.getUserID(evaluationID))) {
+		UserDAO Udao = new UserDAO();
+		if(userID.equals(dao.getUserID(evaluationID)) || Udao.isAdmin(userID)) {
 			int res = dao.delete(evaluationID);
 			
 			if(res == 1) {

@@ -11,9 +11,13 @@ public class EvaluationSearchActionCommand implements EvaluationInterface {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String lectureDivide = request.getParameter("lectureDivide") == null ? "" : request.getParameter("lectureDivide");
-        String searchType = request.getParameter("searchType") == null ? "" : request.getParameter("searchType");
+        String lectureDivide = request.getParameter("lectureDivide") == null ? "전체" : request.getParameter("lectureDivide"); 
+        String searchType = request.getParameter("searchType") == null ? "최신순" : request.getParameter("searchType");
         String search = request.getParameter("search") == null ? "" : request.getParameter("search");
+        
+        request.setAttribute("lectureDivide", lectureDivide);
+        request.setAttribute("searchType", searchType);
+        request.setAttribute("search", search);
         
         // pageNumber의 기본값을 0으로 초기화
         int pageNumber = 0;
