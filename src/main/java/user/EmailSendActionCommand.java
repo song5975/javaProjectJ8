@@ -49,7 +49,6 @@ public class EmailSendActionCommand implements UserInterface {
         }
 
         // 이메일 발송을 위해 필요한 정보들을 설정
-        String host = "http://192.168.50.68:9090/javaProjectJ8/";
         String from = "badugi5655@gmail.com";
         String to = dao.getUserEmail(userID);
         String subject = "강의평가를 위한 이메일 인증 메일입니다.";
@@ -99,7 +98,7 @@ public class EmailSendActionCommand implements UserInterface {
             	@Override
                 protected PasswordAuthentication getPasswordAuthentication() {
                 	// 사용자가 이 메서드를 구현하여 사용자의 이메일 계정 정보(PasswordAuthentication 객체)를 반환
-                    return new PasswordAuthentication(from, "daplpepeofkfamie"); // 생성한 앱 비밀번호
+                    return new PasswordAuthentication(from, "otebgwwroaykwdve"); // 생성한 앱 비밀번호
                 }
             };
             
